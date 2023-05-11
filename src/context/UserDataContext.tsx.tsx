@@ -77,7 +77,6 @@ export const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) 
         invoices.push({ id: doc.id, ...invoiceData });
       });
       setInvoices(invoices)
-      console.log(invoices)
       setLoadingUserData(false);
     };
   

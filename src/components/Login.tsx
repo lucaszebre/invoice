@@ -22,7 +22,6 @@ const Login = () => {
     const signInWithPopupGoogle = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                console.log(result.user); // prints the user information
                 localStorage.setItem("IsAuth", JSON.stringify(true));
                 router.push('/');
                 setMod(!mod)

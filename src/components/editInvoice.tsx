@@ -180,7 +180,7 @@ const EditInvoice = () => {
     const deleteItem = (itemIndex: number) => {
         setItems(items.filter((_, index) => index !== itemIndex));
     };
-    console.log(items)
+
 
     useEffect(() => {
         setItems(invoice.items);
