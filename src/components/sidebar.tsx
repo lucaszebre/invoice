@@ -6,6 +6,7 @@ import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice
 import Logout from './Modal/logout';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { auth } from '@/config/firebase';
+import { useUserData } from '@/context/UserDataContext.tsx'
 
 const sidebar = (props:{
     alt:boolean
@@ -16,6 +17,8 @@ const sidebar = (props:{
     const [isHover, setIsHover] = useState(false);
 
     const barStyle = isHover ? { border: '2px solid #7C5DFA' } : {};
+
+    const {mod} = useUserData();
 
     // Fetch the avatar URL from Firebase storage
     useEffect(() => {
@@ -29,7 +32,7 @@ const sidebar = (props:{
             }).catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }, [,mod]);
 
     return (
         <>

@@ -3,9 +3,13 @@ import { auth, storage } from '@/config/firebase'; // Replace with the path to y
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 import styles from '@/styles/ProfileImageUpload.module.css'
+import { useUserData } from '@/context/UserDataContext.tsx'
+
 const ProfileImageUpload = () => {
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const {mod,setMod} = useUserData();
 
     const uploadProfileImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -17,8 +21,7 @@ const ProfileImageUpload = () => {
             const user = auth.currentUser;
             if (!user) throw new Error('User not logged in');
         
-            const userId = user.uid;
-            const filePath = `profileImages/${userId}`;
+            const filePath = `profileImages/${auth.currentUser?.uid}`;
             const storageRef = ref(storage, filePath);
             await uploadBytes(storageRef, file);
         
@@ -34,6 +37,7 @@ const ProfileImageUpload = () => {
             } finally {
             setUploading(false);
             }
+            setMod(!mod)
         };
 
     return (
