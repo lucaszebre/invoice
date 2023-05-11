@@ -14,7 +14,7 @@ const AllView = () => {
     return (
         <>
         <EditInvoice  />
-        <Sidebar />
+        <Sidebar alt={true} />
         <div className={styles.ViewDiv}>
             <div className={styles.ViewCenter}>
                 <GoBack />
