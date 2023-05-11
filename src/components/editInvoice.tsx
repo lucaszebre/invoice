@@ -8,53 +8,20 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { useUserData } from '@/context/UserDataContext.tsx'
 import { updateInvoiceForCurrentUser } from '@/utils/updateInvoice';
 import { Invoice } from '@/types/InvoiceType';
+import { Schema } from '@/types/InvoiceType';
+import { Paymentdue } from '@/utils/PaymentDue';
+import { getTotalSum } from '@/utils/getTotal';
 
 const EditInvoice = () => {
 
-        
     const {isNew,setIsNew,isLight,setEdit,edit,invoice,setInvoice} = useInvoice();  // use the hook
     const {userData,setMod,mod,invoiceId,invoices} = useUserData();
-
 
     const [isBottomFixed, setIsBottomFixed] = React.useState(false);
 
     const [items, setItems] = useState(invoice.items);
 
-    const getSchema = () => z.object({
-        streetAdress:z.string().min(1,'must put a adress').default(invoice.SenderStreet),
-        City:z.string().min(1,'must put a city').max(30,'the city is too long').default(invoice.SenderCity),
-        Postcode:z.string().min(3,'the postcode is too short').max(5,'the postcode is too long').default(invoice.SenderPostCode),
-        Country:z.string().min(1,'the country is too short').max(15,'the country is too long').default(invoice.SenderCountry),
-        ClientName:z.string().min(1,'clientName is too shorts').max(30,'client Name is too long').default(invoice.clientName),
-        ClientEmail:z.string().email('your email is not well formated').default(invoice.clientEmail),
-        ClientStreetAdress:z.string().min(1,'must put the clien adress').default(invoice.ClientStreet),
-        ClientCity:z.string().min(1,'must put the client city').max(30,'the client city is too long').default(invoice.ClientCity),
-        ClientPostCode:z.string().min(1, 'must put the client post code').max(5,' too long').default(invoice.ClientPostCode),
-        ClientCountry:z.string().min(1,'must put a client country').max(30,'the client country is too long').default(invoice.ClientCountry),
-        InvoiceDate: z.string().default(invoice.PaymentDate),
-        PaymentTerm:z.string().min(1,'must choose the paymentTerm').max(30,'your paymentTerm is too long').default(invoice.PaymentTerm),
-        ProjectDes:z.string().min(1,'must put your project description').max(30,'your description is too long').default(invoice.work),
-    });
-    
-    const Schema : ZodType = z.object({
-        streetAdress:z.string().min(1,'must put a adress'),
-        City:z.string().min(1,'must put a city').max(30,'the city is too long'),
-        Postcode:z.string().min(3,'the postcode is too short').max(5,'the postcode is too long'),
-        Country:z.string().min(1,'the country is too short').max(15,'the country is too long'),
-        ClientName:z.string().min(1,'clientName is too shorts').max(30,'client Name is too long'),
-        ClientEmail:z.string().email('your email is not well formated').default(invoice.clientEmail),
-        ClientStreetAdress:z.string().min(1,'must put the clien adress').default(invoice.ClientStreet),
-        ClientCity:z.string().min(1,'must put the client city').max(30,'the client city is too long'),
-        ClientPostCode:z.string().min(1, 'must put the client post code').max(5,' too long'),
-        ClientCountry:z.string().min(1,'must put a client country').max(30,'the client country is too long'),
-        InvoiceDate: z.string(),
-        PaymentTerm:z.string().min(1,'must choose the paymentTerm').max(30,'your paymentTerm is too long'),
-        ProjectDes:z.string().min(1,'must put your project description').max(30,'your description is too long'),
-    })
-
-
     type SchemaType = z.infer<typeof Schema>;
-
 
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<SchemaType>({
         resolver: zodResolver(Schema),
@@ -91,35 +58,9 @@ const EditInvoice = () => {
         setValue("ProjectDes", invoice.work);
     }, [invoice, setValue]);
     
-    function isValidDate(date: any): boolean {
-        return date instanceof Date && !isNaN(date.getTime());
-        }
-    
 
-    function Paymentdue(date1:string,days:string){
-        // Convert the date1 string into a Date object
-        let dueDate = new Date(date1);
-        // Add the number of days to the Date object
-        dueDate.setDate(dueDate.getDate() + parseInt(days, 10));
-        if (dueDate && isValidDate(dueDate)) {
-            // Format the date into "YYYY-MM-DD" format
-            let formattedDate = dueDate.toISOString().slice(0, 10);
-            return formattedDate;
-            } else {
-            return;
-            }
-        
-    }
 
-    function getTotalSum(items: { name: string, qty: string, price: string, total: string }[]) {
-        let total = 0;
-        items.forEach(item => {
-            total += Number(item.price) * Number(item.qty);
-        });
-    
-        // Return as string
-        return total.toFixed(2); // It will round the number to 2 decimal places
-    }
+
 
     const submitData = async (data: SchemaType) => {
         // Replace any empty strings in data with undefined

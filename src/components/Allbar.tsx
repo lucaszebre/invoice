@@ -15,16 +15,7 @@ const Allbar = () => {
     
     const {view,setView,setInvoice,filter} = useInvoice();  // use the hook
 
-    function Styled(){
-        if ((userData?.invoices?.length ?? 0) > 0 ){
-            return ({
-                alignItems: 'center',
-            })
-        }
-        else{
-            return {}
-        }
-    }
+
 
     const noFilterSelected = !filter.draft && !filter.pending && !filter.paid;
 

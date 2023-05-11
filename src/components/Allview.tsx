@@ -9,7 +9,7 @@ import styles from '@/styles/viewPage.module.css'
 import EditInvoice from './editInvoice'
 const AllView = () => {
 
-    const {view,setView,setInvoice,invoice } = useInvoice();  // use the hook
+    const {view,invoice } = useInvoice();  // use the hook
 
     return (
         <>

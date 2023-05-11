@@ -8,6 +8,9 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { addInvoiceForCurrentUser } from '@/utils/addInvoice';
 import { Invoice } from '@/types/InvoiceType';
 import { useUserData } from '@/context/UserDataContext.tsx'
+import { CreateSchema } from '@/types/InvoiceType';
+import { Paymentdue } from '@/utils/PaymentDue';
+import { getTotalSum } from '@/utils/getTotal';
 
 const CreateInvoice = (props:{code:string}) => {
         const [status,setStatus] = useState('paid')
@@ -21,46 +24,10 @@ const CreateInvoice = (props:{code:string}) => {
 
         const [items, setItems] = useState([{ name: "", qty: "", price: "" , total: ""}]);
 
-        const Schema : ZodType = z.object({
-            streetAdress:z.string().min(1,'must put a adress'),
-            City:z.string().min(1,'must put a city').max(30,'the city is too long'),
-            Postcode:z.string().min(1,'the postcode is too short').max(5,'the postcode is too long'),
-            Country:z.string().min(1,'the country is too short').max(15,'the country is too long'),
-            ClientName:z.string().min(1,'clientName is too shorts').max(30,'client Name is too long'),
-            ClientEmail:z.string().email('your email is not well formated'),
-            ClientStreetAdress:z.string().min(1,'must put the clien adress'),
-            ClientCity:z.string().min(1,'must put the client city').max(30,'the client city is too long'),
-            ClientPostCode:z.string().min(1, 'must put the client post code').max(5,' too long'),
-            ClientCountry:z.string().min(1,'must put a client country').max(30,'the client country is too long'),
-            InvoiceDate: z.string(),
-            PaymentTerm:z.string().min(0,'must choose the paymentTerm').max(30,'your paymentTerm is too long'),
-            ProjectDes:z.string().min(2,'must put your project description').max(30,'your description is too long'),
-        })
-        type SchemaType = z.infer<typeof Schema>;
-
+        type SchemaType = z.infer<typeof CreateSchema>;
 
         const {register,watch, handleSubmit,control,
-        formState:{errors}} = useForm<SchemaType>({resolver:zodResolver(Schema)})
-
-        function Paymentdue(date1:string,days:string){
-            // Convert the date1 string into a Date object
-            let dueDate = new Date(date1);
-            // Add the number of days to the Date object
-            dueDate.setDate(dueDate.getDate() + parseInt(days, 10));
-            // Format the date into "YYYY-MM-DD" format
-            let formattedDate = dueDate.toISOString().slice(0,10);
-            return formattedDate;
-        }
-
-        function getTotalSum(items: { name: string, qty: string, price: string, total: string }[]) {
-            let total = 0;
-            items.forEach(item => {
-                total += Number(item.price) * Number(item.qty);
-            });
-        
-            // Return as string
-            return total.toFixed(2); // It will round the number to 2 decimal places
-        }
+        formState:{errors}} = useForm<SchemaType>({resolver:zodResolver(CreateSchema)})
 
         const submitData = async ( data:SchemaType ) => {
             const watched = watch()

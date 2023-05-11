@@ -14,7 +14,7 @@ const Bar = (props:{
     onClick: () => void
 }) => {
 
-    const {view,setView,setInvoice,invoice, isLight } = useInvoice();  // use the hook
+    const {view,setView,invoice, isLight } = useInvoice();  // use the hook
     const [isHover, setIsHover] = useState(false);
 
     const barStyle = isHover ? { border: '1px solid #7C5DFA' } : {};
