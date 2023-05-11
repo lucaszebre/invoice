@@ -1,0 +1,110 @@
+.DeleteDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Hidden by default */
+    position: fixed;
+    z-index: 4; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    transition: opacity 0.3s ease-in-out;
+
+}
+
+.DeleteWrapper{
+    justify-content: space-between;
+    max-width: 480px;
+    width: 90%;
+    height: 249px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+    padding: 3rem;
+    border-radius: 8px;
+}
+
+ .dark{
+    background-color: #1E2139;
+}
+
+.light{
+    background-color: white;
+}
+
+.DeleteH1{
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.dark .DeleteH1{
+    color: white;
+}
+
+.light .DeleteH1{
+    color: black;
+}
+
+.DeleteP{
+    font-size: 13px;
+    align-items: start;
+    
+}
+
+.dark .DeleteP{
+    color: #DFE3FA;
+}
+
+.light .DeleteP{
+    color: gray;
+}
+
+.DeleteBlock{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: end;
+    gap: 1rem;
+    justify-content: end;
+}
+
+.Cancel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    color: gray;
+    border-radius: 24px;
+    width: 90px;
+    border: none;
+    cursor: pointer;
+}
+.light .Cancel{
+    background-color: aliceblue;
+}
+.dark .Cancel{
+    background-color: #252945;
+}
+.DeleteText{
+    display: flex;
+    gap: 1.5em;
+    flex-direction: column;
+}
+.Delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EC5757;
+    color: white;
+    border-radius: 24px;
+    height: 48px;
+    width: 90px;
+    border: none;
+    cursor: pointer;
+}
+
+

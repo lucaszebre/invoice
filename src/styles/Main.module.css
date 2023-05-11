@@ -1,0 +1,30 @@
+.CenterDiv{
+    width: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.Center{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+    .light{
+        background-color: #F8F8FB;
+    }
+    
+    .dark{
+        background-color: #141625;
+    }
+    
+@media (max-width:1024px){
+    .Center{
+        margin-top: 8rem;
+    }
+    .CenterDiv{
+        width: 90%;
+    }
+}

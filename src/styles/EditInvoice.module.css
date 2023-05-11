@@ -1,0 +1,364 @@
+.Background{
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+
+.ItemListCol{
+    gap: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.EditInvoice{
+    box-sizing: border-box; 
+    position: absolute;
+    left: 88px;
+    width: 80%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 730px;
+    gap: 2em;
+    position: relative;
+    height: 100vh; 
+    overflow-y: scroll; /* ensure scrollbar is always visible */
+    -webkit-box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04); 
+    box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04);
+}
+.light .EditInvoice{
+    background-color: white;
+}
+
+.dark .EditInvoice{
+    background-color: #141625;
+}
+.EditInvoice::-webkit-scrollbar {
+    padding: 1em;
+    width: 8px;
+    height: 122px; /* width of the entire scrollbar */
+}
+
+.EditInvoice::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+.EditInvoice::-webkit-scrollbar-thumb {
+  background: transparent; /* color of the scroll thumb */
+  border-radius: 5px; /* roundness of the scroll thumb */
+}
+
+.EditInvoice::-webkit-scrollbar-thumb:hover {
+  background: transparent; /* color of the scroll thumb on hover */
+}
+
+.EditInvoiceTitle{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1em;
+}
+
+.EditText{
+    font-size: 24px;
+    font-weight: bold;
+}
+.dark .EditText{
+    color: white;
+}
+
+.light .EditText{
+    color: black;
+}
+
+.dark .ItemListTitle{
+    color: white;
+}
+
+.light .ItemListTitle{
+    color: black;
+}
+.EditSpan{
+    color: #888EB0;
+}
+
+.EditForm{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+    position: relative;
+}
+
+.BillFrom{
+    display: flex;
+    flex-direction: column;
+}
+
+.EditH2{
+    color: #7C5DFA;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.EditLabel{
+    gap: 1em;
+    color: #7E88C3;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    width: 100%;
+}
+
+.EditLabel3{
+    gap: 1em;
+    color: #7E88C3;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    width: 100%;
+    align-items: center;
+}
+.EditLabel2{
+    gap: 1em;
+    color: #7E88C3;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    width: 100%;
+    max-width: 214px;
+}
+
+.EditInput,.EditSelect{
+    width: 100%;
+    height: 48px;
+    border: 1px solid #DFE3FA;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: .5rem;
+    font-size: 15px;
+}
+
+.dark .EditInput , .dark .EditSelect{
+    color: white;
+    background-color: #1E2139;
+    border: none;
+}
+
+.light .EditInput,.light .EditSelect {
+    color: black;
+}
+.BottomFixed{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 1em;
+    position: fixed;
+    bottom: 0;
+    height: 110px;
+    max-width: 730px;
+    left: 88px;
+    width: 80%;
+    padding: 2rem;
+    transition: all 0.3s ease-in-out;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.dark .BottomFixed{
+    background-color: #141625;
+}
+
+.light .BottomFixed{
+    background-color: white;
+
+}
+.Bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 1em;
+    height: 110px;
+    max-width: 730px;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+.light .Bottom{
+    background-color: white;
+}
+
+.dark .Bottom{
+    background-color: #141625;
+}
+.BottomCancel{
+    height: 48px;
+    width: 96px;
+    background-color: #DFE3FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7C5DFA;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.DeleteIcon{
+    cursor: pointer;
+}
+.BottomDraft{
+    height: 48px;
+    width: 138px;
+    background-color: #373B53;
+    color: #888EB0;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.BottomChanges{
+    height: 48px;
+    width: 138px;
+    background-color: #7C5DFA;
+    color: white;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+.AddItems{
+    height: 48px;
+    background-color: #DFE3FA;
+    color:#7C5DFA;
+    width: 100%;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.BillFrom{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.EditRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1em;
+}
+
+.EditRowItem{
+    display: grid;
+    grid-template-columns: 3fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 9px;
+    grid-row-gap: 0px;
+}
+.EditItemList{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.EditName,.EditQty,.EditPrice{
+    height: 48px;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: .5rem;
+    font-size: 15px;
+}
+.light .EditName,.light .EditQty ,.light .EditPrice{
+    border: 1px solid #DFE3FA;
+    color: black;
+
+}
+
+.dark .EditName,.dark .EditQty,.dark .EditPrice{
+    color: white;
+    background-color: #1E2139;
+    border: none;
+}
+.EditRow2{
+    display: grid;
+    grid-template-columns: 3fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 9px;
+    grid-row-gap: 0px;
+    align-items: center;
+}
+
+.EditName{
+    width: 100%;
+    
+    height: 48px;
+}
+
+.EditQty{
+    width: 100%;
+    
+    height: 48px;
+}
+
+.EditPrice{
+    width: 100%;
+    height: 48px;
+    
+}
+
+.EditTotal{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: gray;
+}
+
+@media (min-width:1024px){
+    .EditInvoice{
+        max-width: 730px;
+    }
+    .Bottom{
+        max-width: 730px;
+    }
+    .BottomFixed{
+        max-width: 730px;
+        left: 88px;
+        width: 80%;
+    }
+}
+@media (max-width:1024px){
+    .EditInvoice{
+        width: 100%;
+        left: 0;
+        top: 80px;
+        border-radius: 0px;
+    }
+    
+
+    
+}

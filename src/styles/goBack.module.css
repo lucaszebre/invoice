@@ -1,0 +1,21 @@
+.goBack{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.goBackText{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.dark{
+    color: white;
+}
+
+.light{
+    color: black;
+}

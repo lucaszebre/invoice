@@ -1,0 +1,44 @@
+.Empty{
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.EmptyTitle{
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.light{
+    color: black;
+}
+
+.dark{
+    color: white;
+}
+.EmptyDescription{
+    color: #888EB0;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 206px;
+}
+
+.EmptyImage{
+    position: relative;
+    height: 200px;
+    width: 242px;
+}
+
+
+
+@media (max-width:765px){
+    .EmptyImage{
+        width: 194px;
+        height:160px;
+    }
+}

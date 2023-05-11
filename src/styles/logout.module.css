@@ -1,0 +1,52 @@
+.Logout{
+    width: 192px;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    -webkit-box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04); 
+    box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04);
+    border-radius: 4px;
+    position: absolute;
+    top: - 190px;
+    right: -230px;
+    z-index: 10;
+    gap: .5rem;
+}
+
+.dark{
+    background-color: #252945;
+}
+
+.light{
+    background-color: white;
+}
+
+
+
+.LogoutText{
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dark .LogoutText{
+    color: white;
+}
+
+.light .LogoutText{
+    color: black;
+}
+
+
+
+
+@media  (max-width:1024px) {
+    .Logout{
+        right: 20px;
+        top: 100px;
+    }
+    
+}

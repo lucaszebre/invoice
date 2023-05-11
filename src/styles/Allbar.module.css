@@ -1,0 +1,40 @@
+.Allbar{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-bottom: 1em;
+    margin-top: 2em;
+    width: 100%;
+}
+
+
+
+.CenterDiv{
+    width: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 2em;
+}
+.notempty{
+    align-items: start;
+}
+.emptyCenter{
+    align-items: center;
+}
+.Center{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+@media (max-width:1024px){
+    .CenterDiv{
+        margin-top: 8rem;
+        width: 90%;
+    }
+    .Center{
+        width: 100%;
+    }
+}

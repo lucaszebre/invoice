@@ -1,0 +1,385 @@
+.view{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem;
+    width: 100%;
+    gap: 2em;
+    border-radius: 4px;
+    -webkit-box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04); 
+    box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04);
+}
+.light{
+    background-color: white;
+}
+.dark{
+    background-color: #1E2139;
+}
+.viewTop{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+}
+
+
+.viewTop1{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+}
+
+.viewWork{
+    color: gray;
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.light .viewWork{
+    color: gray;
+}
+
+.dark .viewWork{
+    color: #DFE3FA;
+}
+
+.viewTop2{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1em;
+}
+
+.AdresseG{
+    text-transform: capitalize;
+    font-size: 13px;
+}
+.light .AdresseG{
+    color: gray;
+}
+.dark .AdresseG{
+    color: #DFE3FA;
+}
+
+.viewCenter{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.viewCenterBlock1{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1rem;
+    align-items: start;
+}
+
+
+.InvoiceDate{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+}
+
+.Date{
+    font-size: 13px;
+}
+
+.light .Date{
+    color: #7E88C3;
+}
+
+.dark .Date{
+    color: #DFE3FA;
+}
+
+.Date2{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.dark .Date2{
+    color: white;
+}
+
+.light .Date2{
+    color: black;
+}
+
+.viewCenterBlock2{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.Block2Wrapper{
+    display: flex;
+    flex-direction:column;
+    align-items: start;
+    gap: 1rem;
+}
+
+.BlockTextG{
+    font-size: 13px
+}
+
+.light .BlockTextG{
+    color: #7E88C3;
+}
+
+.dark .BlockTextG{
+    color: #DFE3FA;
+}
+
+.BlockTextB{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.light .BlockTextB{
+    color: black;
+}
+
+.dark .BlockTextB{
+    color: white;
+}
+
+.Block2Text{
+    font-size: 13px;
+    margin-bottom: .5rem;
+}
+
+.light .Block2Text{
+    color: #7E88C3;
+}
+
+.dark .Block2Text{
+    color: #DFE3FA;
+}
+.viewCenterBlock3{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.viewBottom{
+    display: flex;
+    flex-direction: column;
+}
+
+.BottomCenterMobile{
+    display: none;
+}
+
+.BottomCenterPC{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.dark .BottomCenterPC{
+    background-color: #252945;
+}
+
+.light .BottomCenterPC{
+    background-color: #F9FAFE;
+}
+
+.ItemName{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1.5rem;
+}
+.light .ItemG{
+    color: #7E88C3;
+}
+
+.dark .ItemG{
+    color: #DFE3FA;
+}
+.ItemG{
+    font-size: 13px;
+}
+.light .ItemG1{
+    color: #0C0E16;
+}
+.dark .ItemG1{
+    color: #DFE3FA;
+}
+.ItemG1{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.ItemG2{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.light .ItemG2{
+    color: #7E88C3;
+}
+
+.dark .ItemG2{
+    color: #DFE3FA;
+}
+
+.QTY{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.Price,.Total{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1.5rem;
+}
+
+.BottomWrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.light .BottomWrapper{
+    background-color: #373B53;
+}
+
+.dark .BottomWrapper{
+    background-color: #0C0E16;
+}
+
+.Amount{
+    color: white;
+    font-size: 13px;
+}
+
+.AmountPrice{
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+.BarHashtag{
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+.BarSpan{
+    color: #7E88C3;
+}
+.BarCode{
+    
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.light .BarCode{
+    color: black;
+}
+
+.dark .BarCode{
+    color: white;
+}
+
+@media (max-width:765px){
+    .view{
+        padding: 1em;
+    }
+    .viewTop{
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .viewCenter{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 15px;
+        grid-row-gap: 15px;
+        width: 100%;
+    }
+        .viewCenterBlock1{ grid-area: 1 / 1 / 2 / 2; }
+        .viewCenterBlock2 { grid-area: 1 / 2 / 2 / 3; }
+        .viewCenterBlock3 { grid-area: 2 / 1 / 3 / 2; }
+    .BottomCenterPC{
+        display: none;
+    }
+    .BottomCenterMobile{
+        background-color: #F9FAFE;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem;
+        border-radius: 4px;
+        gap: 1em;
+    }
+
+    .light .BottomCenterMobile{
+        background-color: #F9FAFE;
+    }
+
+    .dark .BottomCenterMobile{
+        background-color: #252945;
+    }
+    .CenterRow{
+        flex-direction: row;
+        gap: 1em;
+    }
+
+    .Row1,.Row2{
+        gap: .3em;
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .CenterRow{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .RowTitle{
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .dark .RowTitle , .dark .Row2{
+        color: white;
+    }
+
+    .light .RowTitle ,.light .Row2{
+        color: #7E88C3;
+    }
+
+    .dark .Quantity{
+        color: #888EB0;
+    }
+
+    .Quantity,.Row2{
+        font-size: 15px;
+        font-weight: bold;
+    }
+}

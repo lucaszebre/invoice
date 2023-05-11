@@ -1,0 +1,162 @@
+.Bar{
+    display: flex;
+    flex-direction: row;
+    height: 72px;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 8px;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    -webkit-box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04); 
+    box-shadow: 3px -3px 27px 7px rgba(0,0,0,0.04);
+}
+.light{
+    background-color: white;
+}
+
+.dark{
+    background-color: #1E2139;
+}
+
+.BarHashtag{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.BarSpan{
+    color: #7E88C3;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.BarCode{
+    
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.light .BarCode{
+    color: black;
+}
+
+ .dark .BarCode{
+    color: white;
+}
+
+.BarDate{
+    font-size: 13px;
+    text-transform: capitalize;
+}
+
+.light .BarDate{
+    color: #858BB2;
+}
+
+.dark .BarDate{
+    color: white;
+}
+
+.BarName{
+    font-size: 13px;
+    text-transform: capitalize;
+}
+
+.light .BarName{
+    color: #858BB2;
+}
+
+.dark .BarName{
+    color: white;
+}
+.BarPrice , .BarPrice span{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.BarPrice .light,.BarPrice span .light{
+    color: black;
+}
+.dark .BarPrice ,.BarPrice span .dark{
+    color: white;
+}
+.BarPrice{
+    gap: .5rem;
+}
+
+.BarStatus{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.StatusDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 104px;
+    height: 40px;
+    border-radius: 6px;
+    gap: .5rem;
+    
+}
+
+.StatusRound{
+    width: 8px;
+    border-radius: 50%;
+    height: 8px;
+}
+
+.StatusText{
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+
+@media (max-width:765px){
+    .Bar{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        height: 134px;
+    }
+
+    .BarHastag{
+        display: grid;
+        grid-area: 1 / 1 / 2 / 2;
+    }
+
+    .BarDate{
+        margin-bottom: -3rem;
+        display: grid;
+        grid-area: 3 / 1 / 4 / 2;
+    }
+
+    .BarName{
+        justify-content: end;
+        display: grid;
+        grid-area: 1 / 2 / 2 / 3
+    }
+
+    .BarPrice{
+        grid-area: 5 / 1 / 6 / 2;
+        margin-bottom: -2rem;
+    }
+
+    .BarStatus{
+        justify-content: end;
+        display: grid;
+        grid-area: 5 / 2 / 5 / 3;
+    }
+    .StatusArrow{
+        display: none;
+    }
+}

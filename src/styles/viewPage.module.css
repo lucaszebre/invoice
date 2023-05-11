@@ -1,0 +1,29 @@
+
+
+.ViewCenter{
+    width: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: start;
+    gap: 2em;
+}
+
+.ViewDiv{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width:1024px){
+    .ViewCenter{
+        width: 90%;
+        margin-top: 8rem;
+        margin-bottom: 10rem;
+    }
+    .ViewDiv{
+        width: 100%;
+    }
+}
