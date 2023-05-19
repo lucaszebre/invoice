@@ -16,10 +16,8 @@ const Bar = (props:{
     onClick: () => void
 }) => {
     const dispatch = useDispatch();
-    const invoiceState = useSelector((state:RootState) => state.invoice)
     const Mode = useSelector((state:RootState) => state.mode)
 
-    const {view,invoice } = invoiceState;
     const {isLight} = Mode
     const [isHover, setIsHover] = useState(false);
 
