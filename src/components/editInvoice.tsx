@@ -10,7 +10,7 @@ import { Paymentdue } from '@/utils/PaymentDue';
 import { getTotalSum } from '@/utils/getTotal';
 import { useDispatch,useSelector } from 'react-redux';
 import store,{ RootState,AppDispatch } from '@/redux/store';
-import { setIsNew ,setEdit,setInvoice} from '@/redux/invoiceSlice';
+import { setIsNew ,setEdit} from '@/redux/invoiceSlice';
 import { setMod } from '@/redux/userSlice';
 import { getStatusColors } from '@/utils/getStatusColor';
 import { fetchInvoice , fetchUserData} from '@/redux/userSlice';
