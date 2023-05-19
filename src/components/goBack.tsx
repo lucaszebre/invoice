@@ -7,11 +7,9 @@ import { setView} from '@/redux/invoiceSlice';
 import { setMod } from '@/redux/userSlice';
 const goBack = () => {
     const dispatch = useDispatch();
-    const invoiceState = useSelector((state:RootState) => state.invoice)
     const Mode = useSelector((state:RootState) => state.mode)
     const UserData = useSelector((state:RootState) => state.user)
     
-    const {invoice ,isNew,edit} = invoiceState;
     const {isLight} = Mode
     const {mod} = UserData;
 
