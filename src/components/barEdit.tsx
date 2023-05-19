@@ -1,9 +1,11 @@
 import React from 'react'
 import styles from '@/styles/barEdit.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-import { useUserData } from '@/context/UserDataContext.tsx'
 import { changeInvoiceStatus } from '@/utils/updateStatus';
 import { getStatusColors } from '@/utils/getStatusColor';
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setEdit,setIsDelete,setInvoice } from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
 
 const barEdit = (props:{
     colorStatus?:string,
@@ -11,8 +13,15 @@ const barEdit = (props:{
     status?:string,
 }) => {
 
-    const {setEdit,setIsDelete,isLight,setInvoice,invoice} = useInvoice();  // use the hook
-    const {invoiceId,setMod,mod} = useUserData();
+    const dispatch = useDispatch();
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState) => state.user)
+
+    const {invoice } = invoiceState;
+    const {isLight} = Mode
+
+    const {invoiceId,mod} = UserData
 
     const { color, colorStatus } = getStatusColors('paid');
     return (
@@ -32,29 +41,30 @@ const barEdit = (props:{
             </div>
             <div className={styles.BarEditBlock2}>
                 <div className={styles.Edit} onClick={()=>{
-                    setMod(!mod)
-                    setEdit(true)
+                    dispatch(setMod(!mod))
+                    dispatch(setEdit(true))
                 }}>
                     Edit
                 </div>
                 <div className={styles.Delete} 
                 onClick={()=>{
-                    
-                    setIsDelete(true)
+                    dispatch(setIsDelete(true))
                 }}
                 >
                     Delete
                 </div>
                 <div className={styles.Paid}
                 onClick={()=>{changeInvoiceStatus(invoiceId,'paid')
-                setInvoice(
-                    {...invoice,
-                        status:'paid',
-                        color:color,
-                        colorStatus: colorStatus,
-                    }
+                dispatch(
+                    setInvoice(
+                        {...invoice,
+                            status:'paid',
+                            color:color,
+                            colorStatus: colorStatus,
+                        }
+                    )
                 )
-                            setMod(!mod)}}
+                dispatch(setMod(!mod))}}
                 >
                     Mark as Paid 
                 </div>

@@ -14,11 +14,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import styles from '@/styles/Main.module.css'
 import CreateInvoice from '@/components/createInvoice'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-
+import {useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 export default function Home() {
-
-  const {view,setView,setInvoice,invoice, isLight } = useInvoice();  // use the hook
+    const Mode = useSelector((state:RootState) => state.mode)
+    
+    const {isLight} = Mode
 
   useEffect(() => {
     document.body.style.backgroundColor = isLight ? '#F8F8FB' : '#141625';

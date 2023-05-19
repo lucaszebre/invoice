@@ -3,12 +3,15 @@ import styles from '@/styles/header.module.css'
 import Image from 'next/image'
 import useWindowWidth from '../libs/useWindownWidth'
 import Filter from './Modal/filter'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-import { useUserData } from '@/context/UserDataContext.tsx'
-
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setIsNew} from '@/redux/invoiceSlice';
 const Header = () => {
-    
-    const {invoices} = useUserData();
+    const dispatch = useDispatch();
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState) => state.user)
+    const {isLight} = Mode
+    const {invoices} = UserData;
 
     function NumberInvoice(){
         var number = invoices.length
@@ -22,7 +25,6 @@ const Header = () => {
         }
     }
     const windowWidth = useWindowWidth();
-    const {setIsNew,isLight } = useInvoice();  // use the hook
     const [filter,setFilter]= useState(false)
     return (
         <>
@@ -38,7 +40,7 @@ const Header = () => {
                 </div>
                 <div className={styles.HeaderBlock2}>
                     {filter && <Filter />}
-                    <div className={styles.Status} onClick={()=>{ setFilter(prevFilter => !prevFilter);
+                    <div className={styles.Status} onClick={()=>{setFilter(!filter);
                         
                     }}>
                         <span className={`${styles.StatusText} ${isLight?styles.light:styles.dark}`}>
@@ -47,7 +49,7 @@ const Header = () => {
                         <Image src={'/image/icon-arrow-down.svg'} alt='icon-arrow-down' width={8} height={8}  />
                     </div>
                     <div className={styles.StatusWrapper} onClick={()=>{
-                        setIsNew(true)
+                        dispatch(setIsNew(true))
                     }}>
                         <div className={styles.CroixBlock}>
                             <Image src={'/image/icon-plus.svg'} alt='icon-plus' width={10} height={10} />

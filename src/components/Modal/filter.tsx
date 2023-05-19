@@ -1,27 +1,37 @@
 import React from 'react'
 import styles from '@/styles/filter.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-
+import { useDispatch,useSelector } from 'react-redux';
+import { setFilter } from '@/redux/invoiceSlice';
+import { RootState } from '@/redux/store';
 const Menufilter = () => {
 
-    const {isLight,setFilter,filter } = useInvoice();  // use the hook
+    const dispatch = useDispatch();
 
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
+    const {filter} = invoiceState
     return (
-        <div className={`${styles.Menufilter} ${isLight?styles.light:styles.dark}`}>
+        <div className={`${styles.Menufilter} ${Mode.isLight?styles.light:styles.dark}`}>
             <div className={styles.FilterRow}>
                 <input type="checkbox"  className={styles.Checkbox}
                 onChange={
                     (e)=>{
                         if(e.target.checked){
-                            setFilter({
-                                ...filter,
-                                draft:true
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    draft:true
+                                })
+                            )
+                            
                         }else{
-                            setFilter({
-                                ...filter,
-                                draft:false
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    draft:false
+                                })
+                            )
+                            
                         }
                     }
                 }   
@@ -35,15 +45,21 @@ const Menufilter = () => {
                     onChange={
                     (e)=>{
                         if(e.target.checked){
-                            setFilter({
-                                ...filter,
-                                pending:true
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    pending:true
+                                })
+                            )
+                            
                         }else{
-                            setFilter({
-                                ...filter,
-                                pending:false
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    pending:false
+                                })
+                            )
+                            
                         }
                     }
                 }
@@ -57,15 +73,19 @@ const Menufilter = () => {
                 onChange={
                     (e)=>{
                         if(e.target.checked){
-                            setFilter({
-                                ...filter,
-                                paid:true
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    paid:true
+                                })
+                            )
                         }else{
-                            setFilter({
-                                ...filter,
-                                paid:false
-                            })
+                            dispatch(
+                                setFilter({
+                                    ...filter,
+                                    paid:false
+                                })
+                            )
                         }
                     }
                 }

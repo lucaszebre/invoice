@@ -1,22 +1,29 @@
 import React , {useRef,useEffect,useState } from 'react'
 import styles from '@/styles/CreateInvoice.module.css'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import { z , ZodType} from "zod";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { addInvoiceForCurrentUser } from '@/utils/addInvoice';
 import { Invoice } from '@/types/InvoiceType';
-import { useUserData } from '@/context/UserDataContext.tsx'
 import { CreateSchema } from '@/types/InvoiceType';
 import { Paymentdue } from '@/utils/PaymentDue';
 import { getTotalSum } from '@/utils/getTotal';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setIsNew } from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
 const CreateInvoice = (props:{code:string}) => {
         const [status,setStatus] = useState('paid')
 
-        const {isNew,setIsNew,isLight} = useInvoice();  // use the hook
-        const {userData,setMod,mod} = useUserData();
+        const dispatch = useDispatch();
+        const invoiceState = useSelector((state:RootState) => state.invoice)
+        const Mode = useSelector((state:RootState) => state.mode)
+        const UserData = useSelector((state:RootState) => state.user)
+    
+        const { isNew} = invoiceState;
+        const {isLight} = Mode
+        const {userData,mod} = UserData;
 
         const editInvoiceRef = useRef<HTMLDivElement>(null);
         const bottomRef = useRef<HTMLDivElement>(null);
@@ -61,14 +68,14 @@ const CreateInvoice = (props:{code:string}) => {
     try {
         await addInvoiceForCurrentUser(invoiceData);
         // Handle successful invoice submission, e.g., show a success message or redirect
-        setMod(!mod)
+        dispatch(setMod(!mod))
         console.log(userData) // problem here stay null should not 
     } catch (error) {
         // Handle errors, e.g., show an error message
         console.error("Error adding invoice: ", error);
         return;
     }
-    setIsNew(false)
+    dispatch(setIsNew(false))
         }
 
         const addItem = () => {
@@ -87,7 +94,7 @@ const CreateInvoice = (props:{code:string}) => {
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             if(e.target === e.currentTarget) {
                 // perform an action if the event target is the current target
-                setIsNew(false)
+                dispatch(setIsNew(false))
             }
         }}
         >
@@ -314,7 +321,7 @@ const CreateInvoice = (props:{code:string}) => {
                     </div>
                     <div className={isBottomFixed ? `${styles.Bottom} ${styles.BottomFixed}` : styles.Bottom} ref={bottomRef}>
                         <button className={styles.BottomCancel} onClick={()=>{
-                            setIsNew(false)
+                            dispatch(setIsNew(false))
                         }}>
                             Discard
                         </button>

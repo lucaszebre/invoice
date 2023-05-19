@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react'
 import styles from '@/styles/sidebar.module.css'
 import Image from 'next/image'
 import Avatar from '@mui/material/Avatar';
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import Logout from './Modal/logout';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { auth } from '@/config/firebase';
-import { useUserData } from '@/context/UserDataContext.tsx'
-
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setMode } from '@/redux/modeSlice';
 const sidebar = (props:{
     alt:boolean
 }) => {
+    const dispatch = useDispatch();
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState) => state.user)
+    
+    const {isLight} = Mode
     const [menu, setMenu] = useState(false)
-    const {isLight, setMode } = useInvoice();  // use the hook
     const [avatarUrl, setAvatarUrl] = useState('');  // State to hold the avatar URL
     const [isHover, setIsHover] = useState(false);
 
     const barStyle = isHover ? { border: '2px solid #7C5DFA' } : {};
 
-    const {mod} = useUserData();
+    const {mod} = UserData;
 
     // Fetch the avatar URL from Firebase storage
     useEffect(() => {
@@ -44,12 +48,12 @@ const sidebar = (props:{
             <div className={styles.SidebarBlock}>
                 {isLight ? <Image 
                 onClick={() => {
-                    setMode(!isLight)
+                    dispatch(setMode(!isLight))
                 }} 
                 className={styles.SidebarToggleDark} src={'/image/icon-moon.svg'} width={20} height={20} alt='icon-moon' /> : 
                 <Image 
                 onClick={() => {
-                    setMode(!isLight)
+                    dispatch(setMode(!isLight))
                 }}
                     className={styles.SidebarToggleDark} src={'/image/icon-sun.svg'} width={20} height={20} alt='icon-moon' /> }
                 

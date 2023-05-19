@@ -62,3 +62,19 @@ export  const CreateSchema : ZodType = z.object({
         PaymentTerm:z.string().min(0,'must choose the paymentTerm').max(30,'your paymentTerm is too long'),
         ProjectDes:z.string().min(2,'must put your project description').max(30,'your description is too long'),
     })
+
+
+
+
+
+export type FilterType = {
+    draft: boolean;
+    pending: boolean;
+    paid: boolean;
+    };
+    
+export interface UserData {
+    id: string;
+    invoices: Invoice[];
+    }
+    

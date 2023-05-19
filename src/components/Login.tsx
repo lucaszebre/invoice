@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import { auth, provider, db } from  '@/config/firebase'
 import { signInWithPopup } from 'firebase/auth';
-import { collection, addDoc, setDoc, doc, query, where, getDocs } from "firebase/firestore";
 import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useUserData } from '@/context/UserDataContext.tsx'
-
-
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setMod } from '@/redux/userSlice';
 interface User {
     uid: string;
     displayName: string | null;
 }
 
 const Login = () => {
-    const {setMod,mod} = useUserData();
+    const dispatch = useDispatch();
+    const UserData = useSelector((state:RootState) => state.user)
+    const {mod} = UserData;
 
     const router = useRouter();
 
@@ -24,7 +25,7 @@ const Login = () => {
             .then((result) => {
                 localStorage.setItem("IsAuth", JSON.stringify(true));
                 router.push('/');
-                setMod(!mod)
+                dispatch(setMod(!mod))
             })
             .catch((error) => {
                 console.log(error);

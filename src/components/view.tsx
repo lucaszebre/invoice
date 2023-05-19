@@ -1,8 +1,10 @@
 import React from 'react'
 import styles from '@/styles/view.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import { formatDate } from '@/utils/formatDate';
 import { InvoiceItem } from '@/types/InvoiceType';
+import {useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { getStatusColors } from '@/utils/getStatusColor';
 const view = (props:{
     id?:string,
     work?:string,
@@ -22,7 +24,15 @@ const view = (props:{
     price?:string
     items:InvoiceItem[]
 }) => {
-    const { isLight,invoice } = useInvoice();  // use the hook
+    const Mode = useSelector((state:RootState) => state.mode)
+    
+    const {isLight} = Mode
+
+    const InvoiceId = useSelector((state:RootState) => state.user.invoiceId)
+
+    const Invoices = useSelector((state:RootState) => state.user.invoices)
+    const invoice = Invoices.find((item) => item.id == InvoiceId);
+    const {color,colorStatus} = getStatusColors(invoice?.status)
 
     return (
         <div className={`${styles.view} ${isLight?styles.light:styles.dark}`}>
@@ -124,7 +134,7 @@ const view = (props:{
                             <p className={styles.ItemG}>
                                 Item Name 
                             </p>
-                            {invoice.items.map((item, index) => (
+                            {invoice &&   invoice.items.map((item, index) => (
                                 <p key={index} className={styles.ItemG1}>
                                     {item.name}
                                 </p>
@@ -134,7 +144,7 @@ const view = (props:{
                             <p className={styles.ItemG}>
                                 QTY.
                             </p>
-                            {invoice.items.map((item, index) => (
+                            {invoice &&   invoice.items.map((item, index) => (
                                 <p key={index} className={styles.ItemG2}>
                                     {item.qty}
                                 </p>
@@ -145,7 +155,7 @@ const view = (props:{
                             <p className={styles.ItemG}>
                                 price
                             </p>
-                            {invoice.items.map((item, index) => (
+                            {invoice && invoice.items.map((item, index) => (
                                 <p key={index} className={styles.ItemG2}>
                                     {`${item.price} $` }
                                 </p>
@@ -155,7 +165,7 @@ const view = (props:{
                             <p className={styles.ItemG}>
                                 Total
                             </p>
-                            {invoice.items.map((item, index) => (
+                            {invoice && invoice.items.map((item, index) => (
                                 <p key={index} className={styles.ItemG2}>
                                     {`${item.total} $` }
                                 </p>
@@ -163,7 +173,7 @@ const view = (props:{
                         </div>
                 </div>
                 <div className={styles.BottomCenterMobile}>
-                    {invoice.items.map((item, index) => (
+                    {invoice &&  invoice.items.map((item, index) => (
                         <div className={styles.CenterRow} key={index}>
                             <div className={styles.Row1}>
                                 <p className={styles.RowTitle}>
@@ -185,7 +195,7 @@ const view = (props:{
                         Amount due
                     </p>
                     <span className={styles.AmountPrice}>
-                        $ {props.price}
+                        $ {invoice?.total}
                     </span>
                 </div>
 

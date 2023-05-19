@@ -4,18 +4,27 @@ import styles from '@/styles/Allbar.module.css'
 import Header from './header';
 import Empty from './empty';
 import AllView from './Allview';
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-import { useUserData } from '@/context/UserDataContext.tsx'
 import { Invoice } from '@/types/InvoiceType';
 import { getStatusColors } from '@/utils/getStatusColor';
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setView  } from '@/redux/invoiceSlice';
+import { setInvoiceId } from '@/redux/userSlice';
+import { fetchUserData } from '@/redux/userSlice';
+import { AppDispatch } from '@/redux/store';  // replace with your store's actual path
 
-    
 const Allbar = () => {
-    const {userData,invoices,setInvoiceId} = useUserData();
+    const dispatch = useDispatch<AppDispatch>();
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const UserData = useSelector((state:RootState) => state.user)
+
+    const {userData,invoices,mod} = UserData
     
-    const {view,setView,setInvoice,filter} = useInvoice();  // use the hook
+    const {view,filter} = invoiceState;  // use the hook
 
-
+    useEffect(() => {
+        dispatch(fetchUserData());
+    }, [,mod]);
 
     const noFilterSelected = !filter.draft && !filter.pending && !filter.paid;
 
@@ -52,28 +61,8 @@ const Allbar = () => {
                                                 color={color}
                                                 colorStatus={colorStatus}
                                                 onClick={() => {
-                                                    setInvoice({
-                                                        ...invoicd,
-                                                        work: invoicd.description,
-                                                        SenderStreet: invoicd.senderAddress.street,
-                                                        SenderCity: invoicd.senderAddress.city,
-                                                        SenderPostCode: invoicd.senderAddress.postCode,
-                                                        SenderCountry: invoicd.senderAddress.country,
-                                                        DateInvoice: invoicd.createdAt,
-                                                        PaymentDue: invoicd.paymentDue,
-                                                        PaymentDate: invoicd.paymentTerms.toString(),
-                                                        ClientStreet: invoicd.clientAddress.street,
-                                                        ClientCity: invoicd.clientAddress.city,
-                                                        ClientPostCode: invoicd.clientAddress.postCode,
-                                                        ClientCountry: invoicd.clientAddress.country,
-                                                        clientEmail: invoicd.clientEmail,
-                                                        price: invoicd.total.toString(),
-                                                        color: color,
-                                                        colorStatus: colorStatus,
-                                                        PaymentTerm:invoicd.paymentTerms.toString()
-                                                    });
-                                                    setInvoiceId(invoicd.id)
-                                                    setView(true);
+                                                    dispatch(setInvoiceId(invoicd.id))
+                                                    dispatch(setView(true))
                                                 }}
                                             />
                                         );

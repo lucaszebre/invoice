@@ -1,29 +1,34 @@
 import React from 'react'
 import styles from '@/styles/delete.module.css' 
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import { deleteInvoiceForCurrentUser } from '@/utils/deleteInvoice';
-import { useUserData } from '@/context/UserDataContext.tsx'
-    const Delete = () => {
-        
-        const {invoiceId,setMod,mod} = useUserData();
+import { useDispatch,useSelector } from 'react-redux';
+import { setIsDelete,setView } from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
+import { RootState,AppDispatch } from '@/redux/store';
+    
+const Delete = () => {
+        const dispatch = useDispatch<AppDispatch>();
+        const invoiceState = useSelector((state:RootState) => state.invoice)
+        const UserData = useSelector((state:RootState) => state.user)
+        const {invoiceId,mod} = UserData;
+        const Mode = useSelector((state:RootState) => state.mode)
 
-        const {isdelete,setIsDelete,setView,isLight} = useInvoice();  // use the hook
 
         return (
         <div className={styles.DeleteDiv}
         style={{
-            display: isdelete ? 'flex' : 'none'
+            display: invoiceState.isDelete ? 'flex' : 'none'
         }}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             if(e.target === e.currentTarget) {
                 // perform an action if the event target is the current target
-                setIsDelete(false)
+                dispatch(setIsDelete(false))
             }
         }}
         >
-            <div className={`${styles.DeleteWrapper} ${isLight?styles.light:styles.dark}`} 
+            <div className={`${styles.DeleteWrapper} ${Mode.isLight?styles.light:styles.dark}`} 
             style={{
-                display: isdelete ? 'flex' : 'none'
+                display: invoiceState.isDelete ? 'flex' : 'none'
             }} 
             >
                 <div className={styles.DeleteText}>
@@ -37,7 +42,7 @@ import { useUserData } from '@/context/UserDataContext.tsx'
                 <div className={styles.DeleteBlock}>
                     <button className={styles.Cancel}
                     onClick={()=>{
-                        setIsDelete(false)
+                        dispatch(setIsDelete(false))
                     }}
                     >
                         Cancel
@@ -45,9 +50,9 @@ import { useUserData } from '@/context/UserDataContext.tsx'
                     <button className={styles.Delete} onClick={()=>{
                         if(invoiceId){
                             deleteInvoiceForCurrentUser(invoiceId)
-                            setMod(!mod)
-                            setView(true)
-                            setIsDelete(false)
+                            dispatch(setMod(!mod))
+                            dispatch(setView(true))
+                            dispatch(setIsDelete(false))
                         }
                     }}>
                         Delete

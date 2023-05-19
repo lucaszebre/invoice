@@ -1,8 +1,10 @@
-import React , {useRef,useState} from 'react'
+import React , {useState} from 'react'
 import styles from '@/styles/bar.module.css'
 import Image from 'next/image'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import { formatDate } from '@/utils/formatDate';
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setView } from '@/redux/invoiceSlice';
 const Bar = (props:{
     id:string,
     date:string,
@@ -13,8 +15,12 @@ const Bar = (props:{
     colorStatus:string,
     onClick: () => void
 }) => {
+    const dispatch = useDispatch();
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
 
-    const {view,setView,invoice, isLight } = useInvoice();  // use the hook
+    const {view,invoice } = invoiceState;
+    const {isLight} = Mode
     const [isHover, setIsHover] = useState(false);
 
     const barStyle = isHover ? { border: '1px solid #7C5DFA' } : {};
@@ -23,7 +29,7 @@ const Bar = (props:{
         <>
             <div style={barStyle} className={`${styles.Bar} ${isLight?styles.light:styles.dark}`}  onClick={()=>{
                     props.onClick()
-                    setView(false)
+                    dispatch(setView(false))
             }}
             onMouseEnter={()=>{
                 setIsHover(true)

@@ -1,16 +1,16 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { InvoiceProvider } from '@/context/InvoiceContext'
-import { UserDataProvider } from '@/context/UserDataContext.tsx'
+import { Provider } from 'react-redux'
+import  store  from '@/redux/store'
+
 export default function App({ Component, pageProps }: AppProps) {
 
 
   return (
-    <UserDataProvider>
-    <InvoiceProvider>
-  
-      <Component {...pageProps} />
-    </InvoiceProvider>
-    </UserDataProvider>
+   
+    <Provider store={store}>
+    <Component {...pageProps} />
+    </Provider>
+    
   );
 }

@@ -3,13 +3,18 @@ import { auth, storage } from '@/config/firebase'; // Replace with the path to y
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 import styles from '@/styles/ProfileImageUpload.module.css'
-import { useUserData } from '@/context/UserDataContext.tsx'
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setMod } from '@/redux/userSlice';
 
 const ProfileImageUpload = () => {
+    const dispatch = useDispatch();
+    const UserData = useSelector((state:RootState) => state.user)
+    const {mod} = UserData;
+
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    const {mod,setMod} = useUserData();
 
     const uploadProfileImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -37,7 +42,7 @@ const ProfileImageUpload = () => {
             } finally {
             setUploading(false);
             }
-            setMod(!mod)
+            dispatch(setMod(!mod))
         };
 
     return (

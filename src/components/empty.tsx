@@ -1,11 +1,13 @@
 import React from 'react'
 import Image from 'next/dist/client/image'
 import styles from '@/styles/empty.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const Empty = () => {
-
-    const {isLight } = useInvoice();  // use the hook
+    const Mode = useSelector((state:RootState) => state.mode)
+    
+    const {isLight} = Mode
 
     return (
         <div className={styles.Empty}>

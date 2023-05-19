@@ -1,13 +1,21 @@
 import React from 'react'
 import styles from '@/styles/barEditMobile.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-import { useUserData } from '@/context/UserDataContext.tsx'
 import { changeInvoiceStatus } from '@/utils/updateStatus';
 import { getStatusColors } from '@/utils/getStatusColor';
-const barEditMobile = () => {
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setEdit,setIsDelete,setInvoice } from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
 
-    const {setEdit,setIsDelete,isLight,setInvoice,invoice} = useInvoice();  // use the hook
-    const {invoiceId,setMod,mod} = useUserData();
+const barEditMobile = () => {
+    const dispatch = useDispatch();
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState) => state.user)
+
+    const {invoice } = invoiceState;
+    const {isLight} = Mode
+    const {invoiceId,mod} = UserData
     const { color, colorStatus } = getStatusColors('paid');
 
     return (
@@ -15,14 +23,14 @@ const barEditMobile = () => {
             <div className={styles.BarEditBlock2}>
                 <div className={styles.Edit}
                 onClick={()=>{
-                    setEdit(true)
+                    dispatch(setEdit(true))
                 }}
                 >
                     Edit
                 </div>
                 <div className={styles.Delete} 
                 onClick={()=>{
-                    setIsDelete(true)
+                    dispatch(setIsDelete(true))
                 }}
                 >
                     Delete
@@ -30,14 +38,15 @@ const barEditMobile = () => {
                 <div className={styles.Paid}
                 onClick={()=>{
                     changeInvoiceStatus(invoiceId,'paid')
+                    dispatch(
                     setInvoice(
                         {...invoice,
                             status:'paid',
                             color:color,
                             colorStatus: colorStatus,
                         }
-                    )
-                    setMod(!mod)
+                    ))
+                    dispatch(setMod(!mod))
                 }}
                 >
                     Mark as Paid 

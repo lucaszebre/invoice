@@ -1,18 +1,24 @@
 import React from 'react'
 import Image from 'next/image'
 import styles from '@/styles/goBack.module.css'
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
-import { useUserData } from '@/context/UserDataContext.tsx'
-
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setView} from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
 const goBack = () => {
-
-    const {view,setView,invoice,isLight } = useInvoice();  // use the hook
-    const {setMod,mod} = useUserData();
+    const dispatch = useDispatch();
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState) => state.user)
+    
+    const {invoice ,isNew,edit} = invoiceState;
+    const {isLight} = Mode
+    const {mod} = UserData;
 
     return (
         <div className={styles.goBack} onClick={()=>{
-                setMod(!mod)
-                setView(true)
+                dispatch(setMod(!mod))
+                dispatch(setView(true))
         }}>
             <Image src='/image/icon-arrow-left.svg' width='5' height='9' alt='arrow-left' />
             <p className={`${styles.goBackText} ${isLight?styles.light:styles.dark}`}>

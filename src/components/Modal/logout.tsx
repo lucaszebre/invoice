@@ -1,14 +1,17 @@
 import React from 'react';
 import styles from '@/styles/logout.module.css';
-import { useInvoice } from '@/context/InvoiceContext'; // import the useInvoice hook
 import ProfileImageUpload from '../ProfileImageUpload';
 import { auth } from '@/config/firebase'; // import auth from your firebase.ts file
 import { useRouter } from 'next/dist/client/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+
 const Logout = () => {
-    
+    const Mode = useSelector((state:RootState) => state.mode)
+
     const router = useRouter();
 
-    const {isLight} = useInvoice();  // use the hook
+    const {isLight} = Mode;  // use the hook
 
     const handleSignOut = async () => {
         try {

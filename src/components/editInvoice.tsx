@@ -1,65 +1,76 @@
-import React , {useRef,useEffect,useState } from 'react'
+import React , {useEffect,useState } from 'react'
 import styles from '@/styles/EditInvoice.module.css'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useInvoice } from '@/context/InvoiceContext';  // import the useInvoice hook
 import { z , ZodType} from "zod";
 import { useForm } from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod'
-import { useUserData } from '@/context/UserDataContext.tsx'
 import { updateInvoiceForCurrentUser } from '@/utils/updateInvoice';
-import { Invoice } from '@/types/InvoiceType';
-import { Schema } from '@/types/InvoiceType';
+import { Schema,Invoice } from '@/types/InvoiceType';
 import { Paymentdue } from '@/utils/PaymentDue';
 import { getTotalSum } from '@/utils/getTotal';
+import { useDispatch,useSelector } from 'react-redux';
+import store,{ RootState,AppDispatch } from '@/redux/store';
+import { setIsNew ,setEdit,setInvoice} from '@/redux/invoiceSlice';
+import { setMod } from '@/redux/userSlice';
+import { getStatusColors } from '@/utils/getStatusColor';
+import { fetchInvoice , fetchUserData} from '@/redux/userSlice';
 
 const EditInvoice = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const InvoiceId = useSelector((state:RootState) => state.user.invoiceId)
 
-    const {isNew,setIsNew,isLight,setEdit,edit,invoice,setInvoice} = useInvoice();  // use the hook
-    const {userData,setMod,mod,invoiceId,invoices} = useUserData();
-
+    const invoiceState = useSelector((state:RootState) => state.invoice)
+    const Mode = useSelector((state:RootState) => state.mode)
+    const UserData = useSelector((state:RootState ) => state.user)
+    const { edit} = invoiceState;
+    const {isLight} = Mode
+    const {userData,mod,invoiceId,invoices} = UserData;
+    const Invoices = useSelector((state:RootState) => state.user.invoices)
+    const invoice = Invoices.find((item) => item.id == InvoiceId);
     const [isBottomFixed, setIsBottomFixed] = React.useState(false);
 
-    const [items, setItems] = useState(invoice.items);
+    const [items, setItems] = useState(invoice?.items);
+
 
     type SchemaType = z.infer<typeof Schema>;
 
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<SchemaType>({
         resolver: zodResolver(Schema),
         defaultValues: {
-            streetAdress: invoice.SenderStreet,
-            City: invoice.SenderCity,
-            Postcode: invoice.SenderPostCode,
-            Country: invoice.SenderCountry,
-            ClientName: invoice.clientName,
-            ClientEmail: invoice.clientEmail,
-            ClientStreetAdress: invoice.ClientStreet,
-            ClientCity: invoice.ClientCity,
-            ClientPostCode: invoice.ClientPostCode,
-            ClientCountry: invoice.ClientCountry,
-            InvoiceDate: invoice.PaymentDate,
-            PaymentTerm: invoice.PaymentTerm,
-            ProjectDes: invoice.work,
+            streetAdress: invoice?.senderAddress.street,
+            City: invoice?.senderAddress.city,
+            Postcode: invoice?.senderAddress.postCode,
+            Country: invoice?.senderAddress.country,
+            ClientName: invoice?.clientName,
+            ClientEmail: invoice?.clientEmail,
+            ClientStreetAdress: invoice?.clientAddress.street,
+            ClientCity: invoice?.clientAddress.city,
+            ClientPostCode: invoice?.clientAddress.postCode,
+            ClientCountry: invoice?.clientAddress.country,
+            InvoiceDate: invoice?.createdAt,
+            PaymentTerm: invoice?.paymentTerms,
+            ProjectDes: invoice?.description,
         },
     });
     
     useEffect(() => {
-        setValue("streetAdress", invoice.SenderStreet);
-        setValue("City", invoice.SenderCity);
-        setValue("Postcode", invoice.SenderPostCode);
-        setValue("Country", invoice.SenderCountry);
-        setValue("ClientName", invoice.clientName);
-        setValue("ClientEmail", invoice.clientEmail);
-        setValue("ClientStreetAdress", invoice.ClientStreet);
-        setValue("ClientCity", invoice.ClientCity);
-        setValue("ClientPostCode", invoice.ClientPostCode);
-        setValue("ClientCountry", invoice.ClientCountry);
-        setValue("InvoiceDate", invoice.PaymentDate);
-        setValue("PaymentTerm", invoice.PaymentTerm);
-        setValue("ProjectDes", invoice.work);
+        setValue("streetAdress", invoice?.senderAddress.street);
+        setValue("City", invoice?.senderAddress.city);
+        setValue("Postcode", invoice?.senderAddress.postCode);
+        setValue("Country", invoice?.senderAddress.country);
+        setValue("ClientName", invoice?.clientName);
+        setValue("ClientEmail", invoice?.clientEmail);
+        setValue("ClientStreetAdress", invoice?.clientAddress.street);
+        setValue("ClientCity", invoice?.clientAddress.city);
+        setValue("ClientPostCode", invoice?.clientAddress.postCode);
+        setValue("ClientCountry", invoice?.clientAddress.country);
+        setValue("InvoiceDate", invoice?.createdAt);
+        setValue("PaymentTerm", invoice?.paymentTerms);
+        setValue("ProjectDes", invoice?.description);
     }, [invoice, setValue]);
     
 
-
+    
 
 
     const submitData = async (data: SchemaType) => {
@@ -72,7 +83,7 @@ const EditInvoice = () => {
         
             const watched = watch();
             
-            // Prepare the invoice data in the format expected by the function
+            // Prepare the invoice? data in the format expected by the function
             const invoiceData: Omit<Invoice, 'id'> = {
             // Fill in the fields with the data from the form
             createdAt: watched.InvoiceDate,
@@ -90,42 +101,54 @@ const EditInvoice = () => {
                 postCode: data.Postcode,
                 country: data.Country,
             },
-            status: invoice.status,
-            items: items,
-            paymentDue: Paymentdue(watched.InvoiceDate,data.PaymentTerm) || invoice.PaymentDue,
+            status: invoice?.status||'',
+            items: items||[],
+            paymentDue: Paymentdue(watched.InvoiceDate,data.PaymentTerm) || invoice?.paymentDue,
             description: data.ProjectDes,
             paymentTerms: data.PaymentTerm,
-            total: getTotalSum(items)
+            total: getTotalSum(items?items:[])
             };
         
             console.log(invoiceData);
         
             try {
             await updateInvoiceForCurrentUser(invoiceId, invoiceData);
-            // Handle successful invoice submission, e.g., show a success message or redirect
-            setMod(!mod);
+            // Handle successful invoice? submission, e.g., show a success message or redirect
+            dispatch(setMod(!mod));
             console.log(userData); // problem here stay null should not 
-            setEdit(false);
+            dispatch(setEdit(false))
             } catch (error) {
             // Handle errors, e.g., show an error message
-            console.error("Error adding invoice: ", error);
+            console.error("Error adding invoice?: ", error);
             return;
             }
-            setIsNew(false);
+            dispatch(fetchUserData())
+            dispatch(setIsNew(false))
+            ;
         };
         
 
     const addItem = () => {
-        setItems([...items, { name: "", qty: "", price: "", total:"" }]);
+        if(items){
+            setItems([...items, { name: "", qty: "", price: "", total:"" }]);
+        }
     };
     const deleteItem = (itemIndex: number) => {
-        setItems(items.filter((_, index) => index !== itemIndex));
+        if(items){
+            setItems(items.filter((_, index) => index !== itemIndex));
+        }
     };
 
 
     useEffect(() => {
-        setItems(invoice.items);
-    }, [invoice.items]);
+        setItems(invoice?.items);
+        if(invoices.find((item)=>{item.id==invoiceId})){
+            const currentInvoice =  invoices.find((item)=>{item.id==invoiceId})
+            const {color,colorStatus} = getStatusColors(currentInvoice?.status)
+        dispatch(fetchInvoice(invoiceId.toString()))
+        dispatch(fetchUserData())
+        }
+    }, [invoice?.items]);
 
         return (
         <div className={`${styles.Background} ${isLight?styles.light:styles.dark}`} style={{
@@ -134,7 +157,7 @@ const EditInvoice = () => {
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             if(e.target === e.currentTarget) {
                 // perform an action if the event target is the current target
-                setEdit(false)
+                dispatch( setEdit(false))
             }
         }}
         >
@@ -168,7 +191,7 @@ const EditInvoice = () => {
                             type="text"
                             style={errors.streetAdress ? { border: '1px solid #EC5757' } : {}}
                             {...register("streetAdress")}
-                            defaultValue={invoice.SenderStreet} // Use defaultValue instead of value
+                            defaultValue={invoice?.senderAddress.street} // Use defaultValue instead of value
                             />
 
                             {errors.streetAdress && <p className={styles.ErrorText}>{String(errors.streetAdress.message)}</p>}
@@ -180,7 +203,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text"
                                     style={errors.City ? { border: '1px solid #EC5757' } : {}}
                                     {...register("City")}
-                                    defaultValue={invoice.SenderCity}
+                                    defaultValue={invoice?.senderAddress.city}
                                         />
                                     {errors.City && <p className={styles.ErrorText}>{String(errors.City.message)}</p>}
 
@@ -192,7 +215,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text"
                                     style={errors.Postcode ? { border: '1px solid #EC5757' } : {}}
                                     {...register("Postcode")}
-                                    defaultValue={invoice.SenderPostCode}
+                                    defaultValue={invoice?.senderAddress.postCode}
                                     />
                                     {errors.Postcode && <p className={styles.ErrorText}>{String(errors.Postcode.message)}</p>}
                                 </label>
@@ -203,7 +226,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text"
                                     style={errors.Country ? { border: '1px solid #EC5757' } : {}}
                                     {...register("Country")}
-                                    defaultValue={invoice.SenderCountry}
+                                    defaultValue={invoice?.senderAddress.country}
                                     
                                         />
                                 {errors.Country && <p className={styles.ErrorText}>{String(errors.Country.message)}</p>}
@@ -220,7 +243,7 @@ const EditInvoice = () => {
                             <input className={styles.EditInput} type="text" 
                             style={errors.ClientName ? { border: '1px solid #EC5757' } : {}}
                             {...register("ClientName")} 
-                            defaultValue={invoice.clientName}
+                            defaultValue={invoice?.clientName}
                             
                             />
                             {errors.ClientName && <p className={styles.ErrorText}>{String(errors.ClientName.message)}</p>}
@@ -230,7 +253,7 @@ const EditInvoice = () => {
                             <input className={styles.EditInput} type="text"
                             style={errors.ClientEmail ? { border: '1px solid #EC5757' } : {}}
                             {...register("ClientEmail")}
-                            defaultValue={invoice.clientEmail}
+                            defaultValue={invoice?.clientEmail}
                             
                             />
                             {errors.ClientEmail && <p className={styles.ErrorText}>{String(errors.ClientEmail.message)}</p>}
@@ -241,7 +264,7 @@ const EditInvoice = () => {
                             <input className={styles.EditInput} type="text"
                             style={errors.ClientStreetAdress ? { border: '1px solid #EC5757' } : {}}
                             {...register("ClientStreetAdress")} 
-                            defaultValue={invoice.ClientStreet}
+                            defaultValue={invoice?.clientAddress.street}
                         
                             />
                             {errors.ClientStreetAdress && <p className={styles.ErrorText}>{String(errors.ClientStreetAdress.message)}</p>}
@@ -253,7 +276,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text" 
                                     {...register("ClientCity")}
                                     style={errors.ClientCity ? { border: '1px solid #EC5757' } : {}}
-                                    defaultValue={invoice.ClientCity}
+                                    defaultValue={invoice?.clientAddress.city}
                                 
                                     />
                                     {errors.ClientCity && <p className={styles.ErrorText}>{String(errors.ClientCity.message)}</p>}
@@ -265,7 +288,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text" 
                                     {...register("ClientPostCode")}
                                     style={errors.ClientPostCode ? { border: '1px solid #EC5757' } : {}}
-                                    defaultValue={invoice.ClientPostCode}
+                                    defaultValue={invoice?.clientAddress.postCode}
                                 
                                     />
                                     {errors.ClientPostCode && <p className={styles.ErrorText}>{String(errors.ClientPostCode.message)}</p>}
@@ -277,7 +300,7 @@ const EditInvoice = () => {
                                     <input className={styles.EditInput} type="text" 
                                     {...register("ClientCountry")}
                                     style={errors.ClientCountry ? { border: '1px solid #EC5757' } : {}}
-                                    defaultValue={invoice.ClientCountry}
+                                    defaultValue={invoice?.clientAddress.country}
                                 
                                     />
                                     {errors.ClientCountry && <p className={styles.ErrorText}>{String(errors.ClientCountry.message)}</p>}
@@ -289,7 +312,7 @@ const EditInvoice = () => {
                             <input className={styles.EditInput} type="text" 
                             {...register("ProjectDes")}
                             style={errors.ProjectDes ? { border: '1px solid #EC5757' } : {}}
-                            defaultValue={invoice.work}
+                            defaultValue={invoice?.description}
                         
                             />
                             {errors.ProjectDes && <p className={styles.ErrorText}>{String(errors.ProjectDes.message)}</p>}
@@ -297,11 +320,11 @@ const EditInvoice = () => {
                         <div className={styles.EditRow}>
             
                                 <label htmlFor="" className={styles.EditLabel}  style={errors.InvoiceDate ? { color: '#EC5757' } : {}}>
-                                    Invoice Date
+                                    invoice? Date
                                     <input type="date" className={styles.EditInput}
                                     {...register("InvoiceDate")}
                                     style={errors.InvoiceDate ? { border: '1px solid #EC5757' } : {}}
-                                    defaultValue={invoice.DateInvoice}
+                                    defaultValue={invoice?.createdAt}
                                     
                                         />
                                     {errors.InvoiceDate && <p className={styles.ErrorText}>{String(errors.InvoiceDate.message)}</p>}
@@ -312,7 +335,7 @@ const EditInvoice = () => {
                                     <select className={styles.EditSelect}  id="" 
                                     {...register("PaymentTerm")}
                                     style={errors.PaymentTerm ? { border: '1px solid #EC5757' } : {}}
-                                    defaultValue={invoice.PaymentTerm}
+                                    defaultValue={invoice?.paymentTerms}
                                     
 
                                     >
@@ -345,26 +368,22 @@ const EditInvoice = () => {
                                 <label className={styles.EditLabel3} htmlFor="">Price</label>
                                 <label className={styles.EditLabel3} htmlFor="">Total</label>
                             </div>
-                            
-                            {items.map((item, index) => (
+                        
+                            {items && items.map((item, index) => (
                             <div className={styles.EditRow2} key={index}>
                                 <input
                                     className={styles.EditName}
                                     type="text"
                                     defaultValue={items[index]?.name || ''} 
                                     onChange={(e) => {
-                                        let updatedItems = [...items]; // Use items instead of invoice.items
+                                        let updatedItems = [...items]; // Use items instead of invoice?.items
                                         updatedItems[index] = {
                                             ...updatedItems[index],
                                             name: e.target.value,
                                             total: (parseInt(updatedItems[index].price,10) * parseInt(updatedItems[index].qty,10)).toString()
                                         };
                                         setItems(updatedItems);
-                                        setInvoice({
-                                            ...invoice,
-                                            items:updatedItems
-                                        }
-                                        )
+                                        
                                     }}
                                 />
                                 <input
@@ -372,17 +391,14 @@ const EditInvoice = () => {
                                     type="number"
                                     defaultValue={items[index]?.qty || ''} // Add a check to make sure the item at the current index exists
                                     onChange={(e) => {
-                                        let updatedItems = [...items]; // Use items instead of invoice.items
+                                        let updatedItems = [...items]; // Use items instead of invoice?.items
                                         updatedItems[index] = {
                                             ...updatedItems[index],
                                             qty: e.target.value,
                                             total: (parseInt(updatedItems[index].price,10) * parseInt(e.target.value,10)).toString()
                                         };
                                         setItems(updatedItems);
-                                        setInvoice({
-                                            ...invoice,
-                                            items:updatedItems
-                                        })
+                                        
                                     }}
                                 />
                                 <input
@@ -390,17 +406,14 @@ const EditInvoice = () => {
                                     type="number"
                                     defaultValue={items[index]?.price || ''} // Add a check to make sure the item at the current index exists
                                     onChange={(e) => {
-                                        let updatedItems = [...items]; // Use items instead of invoice.items
+                                        let updatedItems = [...items]; // Use items instead of invoice?.items
                                         updatedItems[index] = {
                                             ...updatedItems[index],
                                             price: e.target.value,
                                             total: (parseInt(e.target.value,10) * parseInt(updatedItems[index].qty,10)).toString()
                                         };
                                         setItems(updatedItems);
-                                        setInvoice({
-                                            ...invoice,
-                                            items:updatedItems
-                                        })
+                                        
                                     }}
                                 />
                                 <p className={styles.EditTotal}>
@@ -418,8 +431,9 @@ const EditInvoice = () => {
                     </div>
                     <div className={isBottomFixed ? `${styles.Bottom} ${styles.BottomFixed}` : styles.Bottom} >
                         <button  className={styles.BottomCancel} onClick={()=>{
-                            setMod(!mod)
-                            setEdit(false)
+                            dispatch(setMod(!mod))
+                            dispatch(fetchUserData())
+                            dispatch(setEdit(false))
                         }}>
                             Cancel
                         </button>
