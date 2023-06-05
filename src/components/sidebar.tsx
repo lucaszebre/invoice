@@ -8,6 +8,8 @@ import { auth } from '@/config/firebase';
 import { useDispatch,useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { setMode } from '@/redux/modeSlice';
+import { setMod } from '@/redux/userSlice';
+import { useRouter } from 'next/dist/client/router';
 const sidebar = (props:{
     alt:boolean
 }) => {
@@ -23,6 +25,8 @@ const sidebar = (props:{
     const barStyle = isHover ? { border: '2px solid #7C5DFA' } : {};
 
     const {mod} = UserData;
+    const router = useRouter();
+
 
     // Fetch the avatar URL from Firebase storage
     useEffect(() => {
@@ -37,6 +41,13 @@ const sidebar = (props:{
                 console.error(error);
             });
     }, [,mod]);
+
+    useEffect(()=>{
+        if(!auth.currentUser?.uid){
+            dispatch(setMod(!mod))
+            router.push('/connexion')
+        }
+    },[])
 
     return (
         <>
