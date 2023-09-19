@@ -1,38 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Invoice Manager
+
+![App Screenshot](/public/assets/Kanban.jpg)
+
+## Overview
+
+The Invoice Manager is a web application built with Next.js, Supabase, and Redux that simplifies your invoice management process. It enables users to log in, create new invoices, change their status, and even delete invoices. Streamline your invoicing workflow with this user-friendly solution.
+
+## Features
+
+**User Authentication**: Securely log in and manage your invoices with user accounts.
+**Create Invoices**: Generate new invoices effortlessly by entering essential details.
+**Invoice Status**: Easily change the status of invoices (e.g., Pending, Paid, Overdue).
+**Delete Invoices**: Remove unwanted invoices from your list.
+**Responsive Design**: Access and manage your invoices across various devices, including desktop and mobile
 
 ## Getting Started
 
-First, run the development server:
+To get started with the Kanban Task Manager, follow these steps:
+
+1. **Clone the Repository:** Clone this repository to your local machine.
+
+   ```bash
+   git clone https://github.com/lucaszebre/invoice
+   
+2.  **Install Dependencies:** Navigate to the project directory and install the required dependencies.
+
+
+  cd invoice-manager
+npm install
+
+3. **Configure Supabase:** Set up your Supabase project and update the configuration with your Supabase credentials.
+
+4. **Start the Application:** Launch the frontend application.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Access the App:** Open your web browser and access the app at http://localhost:3000.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Technologies Used
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Frontend: Next.js, React, Redux, Chakra UI, TypeScript
+- Backend: Supabase (Database, Authentication)
+- State Management: Redux Toolkit
+- Styling: CSS Modules
+- Responsive Design: Ensures usability across devices.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Contributions are welcome! If you'd like to contribute to this project, please follow our Contributing Guidelines.
 
-## Learn More
+### License
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the MIT License - see the LICENSE.md file for details.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Acknowledgments
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Special thanks to the open-source community for their amazing contributions and libraries. Your support makes projects like this possible.
 
-## Deploy on Vercel
+We hope you find the Invoice Manager helpful in streamlining your invoicing process. Happy invoicing!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Please note that this documentation assumes you already have a Supabase project set up. If not, refer to the Supabase documentation for guidance on setting up your Supabase project.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+You can also include additional sections or details as needed for your specific application.
