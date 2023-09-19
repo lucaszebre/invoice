@@ -1,6 +1,6 @@
 #Invoice Manager
 
-![App Screenshot](/public/assets/Kanban.jpg)
+![App Screenshot](Invoice.jpg)
 
 ## Overview
 
