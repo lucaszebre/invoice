@@ -1,65 +1,54 @@
-#Invoice Manager
+# Invoice Manager
 
-![App Screenshot](Invoice.jpg)
+A responsive invoicing app: sign in with Google, then create, edit, filter and track your invoices.
 
-## Overview
+Live demo: https://invoice-lovat.vercel.app
 
-The Invoice Manager is a web application built with Next.js, Supabase, and Redux that simplifies your invoice management process. It enables users to log in, create new invoices, change their status, and even delete invoices. Streamline your invoicing workflow with this user-friendly solution.
+![Invoice Manager screenshot](Invoice.jpg)
 
-## Features
+## What it does
 
-**User Authentication**: Securely log in and manage your invoices with user accounts.
-**Create Invoices**: Generate new invoices effortlessly by entering essential details.
-**Invoice Status**: Easily change the status of invoices (e.g., Pending, Paid, Overdue).
-**Delete Invoices**: Remove unwanted invoices from your list.
-**Responsive Design**: Access and manage your invoices across various devices, including desktop and mobile
+- Google sign-in (Firebase Authentication)
+- Create, edit and delete invoices, with line items and a computed total and payment due date
+- Mark invoices as paid; filter the list by Draft, Pending or Paid
+- Per-user storage in Firestore (`users/{uid}/invoices`)
+- Profile picture upload (Firebase Storage)
+- Light and dark mode, desktop and mobile layouts
 
-## Getting Started
+## Stack
 
-To get started with the Kanban Task Manager, follow these steps:
+- Next.js 13 (pages router), React 18, TypeScript
+- Redux Toolkit + React Redux
+- Firebase (Auth, Firestore, Storage)
+- react-hook-form + zod for form validation
+- MUI 5 with Emotion (avatar, icons, dayjs date adapter)
+- CSS Modules
 
-1. **Clone the Repository:** Clone this repository to your local machine.
+## Run locally
 
-   ```bash
-   git clone https://github.com/lucaszebre/invoice
-   
-2.  **Install Dependencies:** Navigate to the project directory and install the required dependencies.
-
-
-  cd invoice-manager
-npm install
-
-3. **Configure Supabase:** Set up your Supabase project and update the configuration with your Supabase credentials.
-
-4. **Start the Application:** Launch the frontend application.
+Requires Node 18+ and a Firebase project with Google sign-in, Firestore and Storage enabled.
 
 ```bash
-npm run dev
+git clone https://github.com/lucaszebre/invoice.git
+cd invoice
+npm install
+cp .env.example .env.local   # then fill in the values
+npm run dev                  # http://localhost:3000
+```
 
-5. **Access the App:** Open your web browser and access the app at http://localhost:3000.
+Environment variables (from your Firebase web app config), listed in `.env.example`:
 
-### Technologies Used
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
 
-- Frontend: Next.js, React, Redux, Chakra UI, TypeScript
-- Backend: Supabase (Database, Authentication)
-- State Management: Redux Toolkit
-- Styling: CSS Modules
-- Responsive Design: Ensures usability across devices.
+They are also needed for `npm run build`: without them the build stops with `auth/invalid-api-key`.
 
-### Contributing
+Other scripts: `npm run build`, `npm start`.
 
-Contributions are welcome! If you'd like to contribute to this project, please follow our Contributing Guidelines.
+## Status
 
-### License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-
-### Acknowledgments
-
-Special thanks to the open-source community for their amazing contributions and libraries. Your support makes projects like this possible.
-
-We hope you find the Invoice Manager helpful in streamlining your invoicing process. Happy invoicing!
-
-Please note that this documentation assumes you already have a Supabase project set up. If not, refer to the Supabase documentation for guidance on setting up your Supabase project.
-
-You can also include additional sections or details as needed for your specific application.
+Built in 2023 as a learning project; not actively maintained.
