@@ -9,7 +9,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { setMode } from '@/redux/modeSlice';
 import { setMod } from '@/redux/userSlice';
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 const sidebar = (props:{
     alt:boolean
 }) => {

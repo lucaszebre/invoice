@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '@/styles/logout.module.css';
 import ProfileImageUpload from '../ProfileImageUpload';
 import { auth } from '@/config/firebase'; // import auth from your firebase.ts file
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
