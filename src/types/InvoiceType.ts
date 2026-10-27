@@ -30,7 +30,7 @@ export type Address = {
     };
 
 
- export   const Schema : ZodType = z.object({
+ export   const Schema : ZodType<any, any> = z.object({
         streetAdress:z.string().min(1,'must put a adress'),
         City:z.string().min(1,'must put a city').max(30,'the city is too long'),
         Postcode:z.string().min(3,'the postcode is too short').max(5,'the postcode is too long'),
@@ -47,7 +47,7 @@ export type Address = {
     })
 
 
-export  const CreateSchema : ZodType = z.object({
+export  const CreateSchema : ZodType<any, any> = z.object({
         streetAdress:z.string().min(1,'must put a adress'),
         City:z.string().min(1,'must put a city').max(30,'the city is too long'),
         Postcode:z.string().min(1,'the postcode is too short').max(5,'the postcode is too long'),

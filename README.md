@@ -17,7 +17,7 @@ Live demo: https://invoice-lovat.vercel.app
 
 ## Stack
 
-- Next.js 13 (pages router), React 18, TypeScript
+- Next.js 16 (pages router), React 18, TypeScript
 - Redux Toolkit + React Redux
 - Firebase (Auth, Firestore, Storage)
 - react-hook-form + zod for form validation
@@ -26,7 +26,7 @@ Live demo: https://invoice-lovat.vercel.app
 
 ## Run locally
 
-Requires Node 18+ and a Firebase project with Google sign-in, Firestore and Storage enabled.
+Requires Node 20.9+ and a Firebase project with Google sign-in, Firestore and Storage enabled.
 
 ```bash
 git clone https://github.com/lucaszebre/invoice.git
